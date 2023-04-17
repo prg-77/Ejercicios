@@ -13,6 +13,10 @@ int suma(int x, int y);
 int main()
 {
     int i, x, y;
+    
+    cout << tan(7*PI/6) << endl;
+    cout << tan(-5*PI/6) << endl;
+    /*
     cout << "Hello" << endl; 
     cout << "Introduce x: ";
     cin >> x;
@@ -23,7 +27,7 @@ int main()
     {
         cout << i << endl;
     }  
-
+    */
     return 0;
 }
 
