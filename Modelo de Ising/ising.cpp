@@ -27,7 +27,8 @@ int main()
     datos.open("datos.dat");
 
     //T=0.001;
-    T=2.3;
+    //T=2.3;
+    T=2.8;
 
 
     inicializar(s);
@@ -70,12 +71,14 @@ void inicializar(int s[][N+2])
     {
         for(j=1;j<N+1;j++)
         {
+            /*
             t=1.0*rand()/RAND_MAX;
             if(t<0.5)
                 s[i][j]=1;
             else
                 s[i][j]=-1;
-            //s[i][j]=1;
+            */
+            s[i][j]=1;
         }
     }
 }
