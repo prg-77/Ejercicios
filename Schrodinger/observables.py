@@ -6,7 +6,7 @@ file_out = "grafica_obsevables"
 
 datos=np.loadtxt(file_in)
 
-fig=plt.figure(figsize=[20,30])
+fig=plt.figure(figsize=[30,30])
 
 ax1=fig.add_subplot(321)
 ax1.errorbar(datos[:,0],datos[:,1], yerr=datos[:,2], color="green", ecolor="red", fmt="o-", capsize=2, markersize=1.5, linewidth=0.5, elinewidth=0.3)
@@ -33,5 +33,12 @@ ax5.errorbar(datos[:,0],datos[:,9], yerr=datos[:,10], color="green", ecolor="red
 ax5.set_xlabel("Tiempo")
 ax5.set_ylabel("Energía total")
 
+ax6=fig.add_subplot(326)
+ax6.errorbar(datos[:,0],datos[:,7], color="green", fmt="o-", capsize=2, markersize=1.5, linewidth=0.5, label="Energía cinética")
+ax6.errorbar(datos[:,0],datos[:,5], color="red", fmt="o-", capsize=2, markersize=1.5, linewidth=0.5, label="Energía potencial")
+ax6.errorbar(datos[:,0],datos[:,9], color="blue", fmt="o-", capsize=2, markersize=1.5, linewidth=0.5, label="Energía total")
+ax6.set_xlabel("Tiempo")
+ax6.set_ylabel("Energía")
+ax6.legend()
 
 fig.savefig(file_out)

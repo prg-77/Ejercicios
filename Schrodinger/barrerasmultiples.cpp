@@ -6,14 +6,14 @@
 #include <time.h>
 #include <complex>
 
-#define N 400
+#define N 500
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
 #define n_ciclos 50
 #define lambda 0.5
-#define pasos 2000
+#define pasos 600
 #define experimentos 1
-#define n_max 20 //Numero maximo de barreras
-#define n_barreras 20 //Numero de barreras
+#define n_max 3 //Numero maximo de barreras
+#define n_barreras 3 //Numero de barreras
 
 using namespace std;
 
@@ -31,8 +31,10 @@ int main()
     complex<double> phi[N+1], gamma[N], alpha[N], beta[N], xi[N+1];
     int j, l, m, mT, mi[experimentos];
     ofstream datos;
+    ofstream datos_PD;
 
     datos.open("schrodinger_data.dat");
+    //datos_PD.open("PD.dat");
 
     mT=0;
 
@@ -48,12 +50,13 @@ int main()
         {
             
             PD[l]=calcular_PD(phi);
+            //datos_PD << l << "  " << PD[l] << endl;
             
             if(l%3==0)
             {
                 for(j=0;j<=N;j++)
                 {
-                    datos << j << ", " << abs(phi[j])*abs(phi[j]) << ", " << V[j] << ", " << real(phi[j])*real(phi[j]) << ", " << imag(phi[j])*imag(phi[j]) << ", " <<  calcular_norma(phi) <<  endl;
+                    datos << j << ", " << abs(phi[j])*abs(phi[j]) << ", "  << V[j] << endl; // ", " << real(phi[j])*real(phi[j]) << ", " << imag(phi[j])*imag(phi[j]) << ", " <<  calcular_norma(phi) <<  endl;
                 }
                 datos << endl;
             }
@@ -88,6 +91,7 @@ int main()
     cout << "Probabilidad de transmision: " << 1.0*mT/experimentos << " +/- " << merr << endl;
 
     datos.close();
+    //datos_PD.close();
 
     return 0;   
 }

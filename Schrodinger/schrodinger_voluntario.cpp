@@ -6,12 +6,12 @@
 #include <time.h>
 #include <complex>
 
-#define N 500
+#define N 1000
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
-#define n_ciclos 100
+#define n_ciclos 50
 #define lambda 0.3
-#define pasos 1500
-#define experimentos 1000 
+#define pasos 2500
+#define experimentos 1
 
 using namespace std;
 
@@ -58,15 +58,15 @@ int main()
         {
             
             PD[l]=calcular_PD(phi);
-            datos_PD << l << "  " << PD[l] << endl;
+            //datos_PD << l << "  " << PD[l] << endl;
 
             //Crear datos para grafica de observables
-            /*
+            
             if(l%10==0)
             {
                datos_observables << l << "  " << calcular_x(phi) << "  " << calcular_error_x(phi) << "  " << calcular_p(phi) << "  " << calcular_error_p(phi) << "  " << calcular_V(V,phi) << "  " << calcular_error_V(V,phi) << "  " << calcular_T(phi) << "  " << calcular_error_T(phi) << "  " << calcular_E(V,phi) << "  " << calcular_error_E(V,phi) << endl;
             }
-            */
+            
 
             /*
             if(l%3==0)
@@ -250,9 +250,9 @@ double calcular_p(complex<double> phi[N+1])
     p=0;
     for(j=0;j<N;j++)
     {
-        p=p+conj(phi[j])*(phi[j+1]-phi[j]);
+        p=p-1.0i*conj(phi[j])*(phi[j+1]-phi[j]);
     }
-    return abs(p);
+    return real(p);
 }
 
 // Cálculo del observable T
