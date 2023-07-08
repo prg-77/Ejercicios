@@ -1,0 +1,9 @@
+#Phi lambda_phi err_phi lambda_psi err_psi (Se cambia el angulo phi de la primera trayectoria, energia=10, h=0,01)
+0   69.58   0.97  102.06  1.43
+10  68.56   0.96  126.93  1.78
+20  121.71  1.70  200.41  2.81
+30  45.12   0.63  156.31  2.19
+40  -3.07   0.04  151.07  2.11  
+50  93.97   1.32  285.05  3.99
+60  -6.67   0.09  370.89  5.19
+ 

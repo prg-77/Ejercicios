@@ -7,8 +7,8 @@
 
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
 #define g 9.8
-#define energia 30
-#define pasos 5000
+#define energia 23
+#define pasos 2000
 #define h 0.01
 
 using namespace std;
@@ -24,7 +24,7 @@ double calcular_psi_prima(double y[4]);
 int main()
 {
     double k1[4],k2[4],k3[4],k4[4];
-    double y[4], t, d_0[2], lambda[2], y2[4];
+    double y[4], t, d_0[2], lambda[2][pasos], y2[4], lya_phi, lya_psi, err_lya_phi, err_lya_psi;
     int i, j;
     ofstream animacion, grafica;
 
@@ -41,14 +41,14 @@ int main()
     y[1]=2*sqrt(energia-2*g*(1-cos(y[0]))-g*(1-cos(y[2]))); // Valor inicial de p_phi (en radianes)
     y[3]=sqrt(energia-2*g*(1-cos(y[0]))-g*(1-cos(y[2])))*cos(y[0]-y[2]);  // Valor inicial de  p_psi (en radianes)
 
-    y2[0]=y[0]+0.01;
-    y2[2]=y[2]+0.01;
+    y2[0]=y[0]+0.0000001;
+    y2[2]=y[2]+0.0000001;
     y2[1]=2*sqrt(energia-2*g*(1-cos(y2[0]))-g*(1-cos(y2[2])));
     y2[3]=sqrt(energia-2*g*(1-cos(y2[0]))-g*(1-cos(y2[2])))*cos(y2[0]-y2[2]);
     
     d_0[0]=sqrt(pow(y2[0]-y[0],2)+pow(calcular_phi_prima(y2)-calcular_phi_prima(y),2));
     d_0[1]=sqrt(pow(y2[2]-y[2],2)+pow(calcular_psi_prima(y2)-calcular_psi_prima(y),2));
-    lambda[0]=lambda[1]=0;
+    lya_phi=lya_psi=0.0;
 
     for(i=0;i<pasos;i++)
     {
@@ -111,21 +111,32 @@ int main()
        
     //Coeficientes de Lyapunov
 
-    lambda[0]=lambda[0]+log(sqrt(pow(y2[0]-y[0],2)+pow(calcular_phi_prima(y2)-calcular_phi_prima(y),2))/d_0[0]);
-    lambda[1]=lambda[1]+log(sqrt(pow(y2[2]-y[2],2)+pow(calcular_psi_prima(y2)-calcular_psi_prima(y),2))/d_0[1]);
+    lambda[0][i]=log(sqrt(pow(y2[0]-y[0],2)+pow(calcular_phi_prima(y2)-calcular_phi_prima(y),2))/d_0[0]);
+    lambda[1][i]=log(sqrt(pow(y2[2]-y[2],2)+pow(calcular_psi_prima(y2)-calcular_psi_prima(y),2))/d_0[1]);
 
-       
+    lya_phi=lya_phi+lambda[0][i];
+    lya_psi=lya_psi+lambda[1][i];   
 
         t=t+h;
     }
 
-    lambda[0]=lambda[0]/t;
-    lambda[1]=lambda[1]/t;
+    lya_phi=lya_phi/t;
+    lya_psi=lya_psi/t;
+
+    err_lya_phi=err_lya_psi=0.0;
+    for(i=0;i<pasos;i++)
+    {
+        err_lya_phi=err_lya_phi+pow(lambda[0][i]-lya_phi,2);
+        err_lya_psi=err_lya_psi+pow(lambda[1][i]-lya_psi,2);
+    }
+
+    err_lya_phi=sqrt(err_lya_phi/pasos)/sqrt(pasos);
+    err_lya_psi=sqrt(err_lya_psi/pasos)/sqrt(pasos);
 
     animacion.close();
     grafica.close();
-    cout << "Coeficiente de Lyapunov phi: " << lambda[0] << endl;
-    cout << "Coeficiente de Lyapunov psi: " << lambda[1] << endl;
+    cout << "Coeficiente de Lyapunov phi: " << lya_phi << " +/- " << err_lya_phi << endl;
+    cout << "Coeficiente de Lyapunov psi: " << lya_psi << " +/- " << err_lya_psi << endl;
 
     return 0;
 }

@@ -59,7 +59,7 @@ y_max = 2.5
 interval = 30 # Tiempo entre fotogramas en milisegundos
 show_trail = True # Muestra la "estela" del planeta
 trail_width = 0.25 # Ancho de la estela
-save_to_file = True # False: muestra la animación por pantalla,
+save_to_file = False # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
 dpi = 200 # Calidad del vídeo de salida (dots per inch)
 
